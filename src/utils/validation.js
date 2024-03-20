@@ -64,7 +64,7 @@ export const validatePlayerId = validateIsPositiveInteger("Player id");
  * @param {number} score The player score to validate.
  * @returns {number} The validated player score.
  */
-export const validatePlayerScore = validateIsPositiveInteger("Player score");
+export const validateScore = validateIsPositiveInteger("Player score");
 
 /**
  * Validates that the given name is a valid name for the player.
