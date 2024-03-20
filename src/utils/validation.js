@@ -1,13 +1,12 @@
 /**
- * Validates that the given size is a valid size for the board.
+ * Validates that the given size is 3 for a Tic-Tac-Toe Board.
  *
  * @param {number} size The size to validate.
  * @returns {number} The validated size.
  */
-const validateSize = size => {
+export const validateSize = size => {
   if (typeof size !== "number") throw new Error("Size must be a number.");
-  if (!Number.isInteger(size) || size <= 0)
-    throw new Error("Size must be a positive integer.");
+  if (!Number.isInteger(size) || size !== 3) throw new Error("Size must be 3.");
   return size;
 };
 
@@ -17,7 +16,7 @@ const validateSize = size => {
  * @param {string} symbol The symbol to validate.
  * @returns {string} The validated symbol.
  */
-const validateSymbol = symbol => {
+export const validateSymbol = symbol => {
   if (typeof symbol !== "string") throw new Error("Symbol must be a string.");
   if (symbol.length !== 1)
     throw new Error("Symbol must be a single character.");
@@ -30,7 +29,7 @@ const validateSymbol = symbol => {
  * @param {number} index The index to validate.
  * @returns {number} The validated index.
  */
-const validateIndex = (index, size) => {
+export const validateIndex = (index, size) => {
   if (typeof index !== "number") throw new Error("Index must be a number.");
   if (!Number.isInteger(index) || index < 0 || index >= size)
     throw new Error("Index must be a positive integer within the board size.");
@@ -42,7 +41,7 @@ const validateIndex = (index, size) => {
  * @param {number} number The number to validate.
  * @returns {number} The validated number.
  */
-const validateIsPositiveInteger = number => {
+export const validateIsPositiveInteger = number => {
   if (typeof number !== "number") {
     throw new Error("Player id must be a number");
   }
@@ -56,10 +55,10 @@ const validateIsPositiveInteger = number => {
 /**
  * Validates that the given name is a valid name for the player.
  *
- * @param {string} name The name to validate.
+ * @param {string} name The name to v⁄alidate.
  * @returns {string} The validated name.
  */
-const validateName = name => {
+export const validateName = name => {
   if (typeof name !== "string") {
     throw new Error("Player name must be a string");
   }
@@ -78,7 +77,7 @@ const validateName = name => {
  * @param {boolean} value The value to validate.
  * @returns {boolean} The validated value.
  */
-const validateIsBoolean = value => {
+export const validateIsBoolean = value => {
   if (typeof value !== "boolean") {
     throw new Error("Value must be a boolean");
   }
@@ -107,7 +106,7 @@ const validateObject = requiredMethods => object => {
 /**
  * Validates that a board object has all the required board methods.
  */
-const validateBoard = validateObject([
+export const validateBoard = validateObject([
   "getSize",
   "getFiller",
   "getBoard",
@@ -123,7 +122,7 @@ const validateBoard = validateObject([
 /**
  * Validates that a player object has all the required player methods.
  */
-const validatePlayer = validateObject([
+export const validatePlayer = validateObject([
   "setId",
   "setName",
   "setSymbol",
@@ -145,7 +144,7 @@ const validatePlayer = validateObject([
 /**
  * Validates that a tie object has all the required tie methods.
  */
-const validateTie = validateObject([
+export const validateTie = validateObject([
   "getTie",
   "getScore",
   "getIsTie",
@@ -161,24 +160,11 @@ const validateTie = validateObject([
  * @param {Array<number>} winCells The win cells to validate.
  * @param {number} size The size of the board.
  */
-const validateWinCells = (winCells, size) => {
+export const validateWinCells = (winCells, size) => {
   if (!Array.isArray(winCells)) {
     throw new Error("Win cells must be an array");
   }
   if (winCells.length !== size) {
     throw new Error(`Win cells must have a length of ${size}`);
   }
-};
-
-export {
-  validateSize,
-  validateSymbol,
-  validateIndex,
-  validateIsPositiveInteger,
-  validateName,
-  validateIsBoolean,
-  validateBoard,
-  validatePlayer,
-  validateTie,
-  validateWinCells,
 };
