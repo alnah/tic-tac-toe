@@ -1,3 +1,9 @@
+import {
+  validateSize,
+  validateSymbol,
+  validateIndex,
+} from "../utils/validation";
+
 /**
  * The default size of the board.
  * @type {number}
@@ -20,7 +26,7 @@ const makeRow = (size, filler) =>
   Object.freeze(Array.from({ length: size }, () => filler));
 
 /**
- * Creates a frozen grid of specified size, with each cell filled with a 
+ * Creates a frozen grid of specified size, with each cell filled with a
  * specified filler.
  * @param {number} size - The size of the grid (number of rows and columns).
  * @param {string} filler - The filler symbol for each cell in the grid.
@@ -31,21 +37,23 @@ const makeGrid = (size, filler) =>
 
 /**
  * Factory function to create a board object with its methods.
- * @param {Object} board - An object containing the size, filler, and grid of 
+ * @param {Object} board - An object containing the size, filler, and grid of
  * the board. Defaults to a standard board.
- * @returns {Object} An object representing the board with methods to manipulate 
+ * @returns {Object} An object representing the board with methods to manipulate
  * and query the board state.
  */
 const makeBoard = (
   board = { size: SIZE, filler: FILLER, grid: makeGrid(SIZE, FILLER) },
 ) => {
+  validateSize(board.size);
+  validateSymbol(board.filler);
+
   const { size, filler, grid } = board;
 
-  const getRow = row => grid[row];
-  const getCol = col => grid.map(r => r[col]);
+  const getRow = row => grid[validateIndex(row, SIZE)];
+  const getCol = col => grid.map(r => r[validateIndex(col, SIZE)]);
   const getDiag = () => grid.map((r, i) => r[i]);
   const getAntiDiag = () => grid.map((r, i) => r[size - 1 - i]);
-
   const getLines = (row, col) => [
     getRow(row),
     getCol(col),
@@ -73,6 +81,12 @@ const makeBoard = (
     getBoard: () => board,
 
     /**
+     * Resets the board to its initial state.
+     * @returns {Object} A new board object with the initial grid.
+     */
+    resetBoard: () => makeBoard(),
+
+    /**
      * Retrieves the grid of the board.
      * @returns {Array} The 2D array representing the board's grid.
      */
@@ -84,7 +98,11 @@ const makeBoard = (
      * @param {number} col - The column index of the cell.
      * @returns {string} The symbol at the specified cell.
      */
-    getCell: (row, col) => grid[row][col],
+    getCell: (row, col) => {
+      [row, col].forEach(index => validateIndex(index, SIZE));
+
+      return grid[row][col];
+    },
 
     /**
      * Places a symbol at the specified row and column if the cell is empty.
@@ -93,11 +111,51 @@ const makeBoard = (
      * @param {string} symbol - The symbol to place.
      * @returns {Object} A new board object with the updated grid.
      */
-    placeSymbol: (row, col, symbol) => {
+    setCell: (row, col, symbol) => {
+      [row, col].forEach(index => validateIndex(index, SIZE));
+
       const updatedGrid = JSON.parse(JSON.stringify(grid));
+
       if (updatedGrid[row][col] === filler) updatedGrid[row][col] = symbol;
 
       return makeBoard({ ...board, grid: updatedGrid });
+    },
+
+    /**
+     * Checks if a given symbol has a winning line starting from a specific
+     * cell.
+     * @param {number} row - The row index of the starting cell.
+     * @param {number} col - The column index of the starting cell.
+     * @param {string} symbol - The symbol to check for a win.
+     * @returns {boolean} True if there is a winning line, false otherwise.
+     */
+    hasWin: (row, col, symbol) => {
+      [row, col].forEach(index => validateIndex(index, SIZE));
+      validateSymbol(symbol);
+
+      if (getRow(row).every(cell => cell === symbol)) return true;
+      if (getCol(col).every(cell => cell === symbol)) return true;
+      if (getDiag().every(cell => cell === symbol)) return true;
+      if (getAntiDiag().every(cell => cell === symbol)) return true;
+
+      return false;
+    },
+
+    /**
+     * Checks if the game is a tie, meaning the grid is full without any player
+     * winning.
+     * @param {number} row - The row index to check from.
+     * @param {number} col - The column index to check from.
+     * @param {string} symbol - The symbol to check for a win.
+     * @returns {boolean} True if the game is a tie, false otherwise.
+     */
+    hasTie: function (row, col, symbol) {
+      [row, col].forEach(index => validateIndex(index, SIZE));
+      validateSymbol(symbol);
+
+      if (this.hasWin(row, col, symbol)) return false;
+
+      return grid.every(r => !r.some(cell => cell === filler));
     },
 
     /**
@@ -108,25 +166,27 @@ const makeBoard = (
      * @returns {Array} An array of cell objects that form a winning line.
      */
     getWinCells: (row, col, symbol) => {
+      [row, col].forEach(index => validateIndex(index, SIZE));
+
       const lines = getLines(row, col);
       const winCells = [];
 
-      lines.forEach((line, i) => {
+      lines.forEach((line, index) => {
         if (line.every(cell => cell === symbol)) {
           // if the line is all the same symbol, add the cells to winCells
-          if (i === 0) {
+          if (index === 0) {
             // row
-            line.forEach((_, col) => winCells.push({ row, col }));
-          } else if (i === 1) {
+            line.forEach((_, c) => winCells.push({ row, col: c }));
+          } else if (index === 1) {
             // column
-            line.forEach((_, row) => winCells.push({ row, col }));
-          } else if (i === 2) {
+            line.forEach((_, r) => winCells.push({ row: r, col }));
+          } else if (index === 2) {
             // diagonal
-            line.forEach((_, row) => winCells.push({ row, col: row }));
-          } else if (i === 3) {
+            line.forEach((_, r) => winCells.push({ row: r, col: r }));
+          } else if (index === 3) {
             // anti-diagonal
-            line.forEach((_, row) =>
-              winCells.push({ row, col: size - 1 - row }),
+            line.forEach((_, r) =>
+              winCells.push({ row: r, col: size - 1 - r }),
             );
           }
         }
@@ -138,41 +198,6 @@ const makeBoard = (
       }));
 
       return Object.freeze(updatedWinCells);
-    },
-
-    /**
-     * Resets the board to its initial state.
-     * @returns {Object} A new board object with the initial grid.
-     */
-    resetBoard: () => makeBoard(),
-
-    /**
-     * Checks if a given symbol has a winning line starting from a specific
-     * cell.
-     * @param {number} row - The row index of the starting cell.
-     * @param {number} col - The column index of the starting cell.
-     * @param {string} symbol - The symbol to check for a win.
-     * @returns {boolean} True if there is a winning line, false otherwise.
-     */
-    hasWin: (row, col, symbol) => {
-      if (getRow(row).every(cell => cell === symbol)) return true;
-      if (getCol(col).every(cell => cell === symbol)) return true;
-      if (getDiag().every(cell => cell === symbol)) return true;
-      if (getAntiDiag().every(cell => cell === symbol)) return true;
-      return false;
-    },
-
-    /**
-     * Checks if the game is a tie, meaning the grid is full without any player 
-     * winning.
-     * @param {number} row - The row index to check from.
-     * @param {number} col - The column index to check from.
-     * @param {string} symbol - The symbol to check for a win.
-     * @returns {boolean} True if the game is a tie, false otherwise.
-     */
-    hasTie: function (row, col, symbol) {
-      if (this.hasWin(row, col, symbol)) return false;
-      return grid.every(row => !row.some(cell => cell === filler));
     },
   });
 };
