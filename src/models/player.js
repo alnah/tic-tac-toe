@@ -1,8 +1,9 @@
 import {
-  validateIsPositiveInteger,
+  validatePlayerId,
   validateName,
   validateSymbol,
   validateIsBoolean,
+  validatePlayerScore,
 } from "../utils/validation";
 
 /**
@@ -34,11 +35,11 @@ const makePlayer = (
 ) => {
   const { id, name, score, symbol, isCurrent, isWinner } = player;
 
-  if (id) validateIsPositiveInteger(id);
+  if (id) validatePlayerId(id);
   if (name) validateName(name);
   if (symbol) validateSymbol(symbol);
   if (isCurrent) validateIsBoolean(isCurrent);
-  validateIsPositiveInteger(score);
+  validatePlayerScore(score);
   validateIsBoolean(isWinner);
 
   return Object.freeze({
@@ -47,8 +48,7 @@ const makePlayer = (
      * @param {string} newId - The new ID to be set for the player.
      * @returns {Object} A new player object with the updated ID.
      */
-    setId: newId =>
-      makePlayer({ ...player, id: validateIsPositiveInteger(newId) }),
+    setId: newId => makePlayer({ ...player, id: validatePlayerId(newId) }),
 
     /**
      * Sets a new name for the player, truncated to 12 characters.
