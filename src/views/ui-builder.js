@@ -10,7 +10,7 @@
  * approach to DOM manipulation.
  *
  * @example
- * // Creating a new paragraph element with text content and appending it to the body
+ * Creating a new paragraph element with text content and appending it to body
  * makeHTMLBuilder()
  *   .setTag('p')
  *   .setContent('Hello, world!')
