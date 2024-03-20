@@ -2,6 +2,13 @@ import makeBoard from "./board";
 import makePlayer from "./player";
 import makeTie from "./tie";
 import makeObserver from "../utils/observer";
+import {
+  validateIsBoolean,
+  validateBoard,
+  validatePlayer,
+  validateTie,
+  validateWinCells,
+} from "../utils/validation";
 
 /**
  * Initial value for the canPlay property in the game state.
@@ -13,7 +20,7 @@ const INIT_CAN_PLAY = true;
  * Initial value for the winCells property in the game state.
  * @type {Array}
  */
-const INIT_WIN_CELLS = Object.freeze([]);
+const INIT_WIN_CELLS = Object.freeze([null, null, null]);
 
 /**
  * Creates a new game with the given player names and initial game state.
@@ -43,6 +50,13 @@ const makeGame = (
   },
 ) => {
   const { board, player1, player2, tie, canPlay, winCells } = game;
+  validateBoard(board);
+  validatePlayer(player1);
+  validatePlayer(player2);
+  validateTie(tie);
+  validateIsBoolean(canPlay);
+  validateWinCells(winCells, board.getSize());
+
   const gameObserver = makeObserver();
 
   return Object.freeze({
