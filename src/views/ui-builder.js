@@ -1,27 +1,40 @@
 /**
- * Module providing functionality for creating and managing HTML elements with a
- * fluent interface to easily set properties. This module aims to simplify the
- * process of building and customizing HTML elements.
  * @module HTMLBuilder
+ * Provides functionality for creating and managing HTML elements with a fluent
+ * interface for easily setting properties. This module simplifies the process
+ * of building and customizing HTML elements by offering a comprehensive set of
+ * methods for defining element properties, including tag, parent, classList,
+ * id, textContent, data attributes, form action and method, input attributes,
+ * href, and target. It supports creating the HTML element, updating its
+ * properties, and appending it to its parent, facilitating a more streamlined
+ * approach to DOM manipulation.
+ *
+ * @example
+ * // Creating a new paragraph element with text content and appending it to the body
+ * makeHTMLBuilder()
+ *   .setTag('p')
+ *   .setContent('Hello, world!')
+ *   .setParent(document.body)
+ *   .makeHTMLElement();
  */
 
 /**
- * Error message indicating that the 'makeHTMLElement' method must be called
- * before the current operation.
+ * Error message indicating the 'makeHTMLElement' method must be called before
+ * the current operation.
  */
 const NO_NODE_ERR_MSG =
   "Use 'makeHTMLElement' method before attempting to access the HTML element.";
 
 /**
- * Error message indicating that the 'setTag' method must be called before the
+ * Error message indicating the 'setTag' method must be called before the
  * current operation.
  */
 const NO_TAG_ERR_MSG =
   "Use 'setTag' method before attempting to make the HTML element.";
 
 /**
- * Error message indicating that the 'setParent' method must be called before
- * the current operation.
+ * Error message indicating the 'setParent' method must be called before the
+ * current operation.
  */
 const NO_PARENT_ERR_MSG =
   "Use 'setParent' method before attempting to make the HTML element.";
@@ -159,82 +172,72 @@ export const validateTarget = validateString(
  * elements.
  *
  * The HTML builder provides a fluent interface for setting and updating
- * properties of an HTML element,
- * including its tag, parent, classList, id, textContent, data attributes, form
- * action and method, input attributes,
- * href, and target. It also supports creating the HTML element, updating its
+ * properties of an HTML element, including its tag, parent, classList, id,
+ * textContent, data attributes, form action and method, input attributes, href,
+ * and target. It also supports creating the HTML element, updating its
  * properties, and appending it to its parent.
  *
  * @param {Object} elementProperties - Initial properties of the element.
  * Defaults to an empty object.
  * @returns {Object} An object containing methods for managing the element's
- * properties and generating the HTML element.
- *
- * @interface
- *
- * @method getTag - Returns the tag name of the element.
- * @method setTag - Sets the tag name of the element.
- *
- * @method getParent - Returns the parent of the element.
- * @method setParent - Sets the parent of the element.
- *
- * @method getClasses - Returns the classList of the element.
- * @method addClass - Adds a class to the element's classList.
- * @method removeClass - Removes a class from the element's classList.
- *
- * @method getId - Returns the id of the element.
- * @method setId - Sets the id of the element.
- * @method removeId - Removes the id of the element.
- *
- * @method getContent - Returns the textContent of the element.
- * @method setContent - Sets the textContent of the element.
- * @method removeContent - Removes the textContent of the element.
- *
- * @method getData - Returns the data attributes of the element.
- * @method setData - Sets a data attribute of the element.
- * @method removeData - Removes a data attribute of the element.
- *
- * @method getFormAction - Returns the form action of the element.
- * @method setFormAction - Sets the form action of the element.
- * @method removeFormAction - Removes the form action of the element.
- *
- * @method getFormMethod - Returns the form method of the element.
- * @method setFormMethod - Sets the form method of the element.
- * @method removeFormMethod - Removes the form method of the element.
- *
- * @method getLabelFor - Returns the htmlFor attribute of the element.
- * @method setLabelFor - Sets the htmlFor attribute of the element.
- * @method removeLabelFor - Removes the htmlFor attribute of the element.
- *
- * @method getInputType - Returns the type attribute of the input element.
- * @method setInputType - Sets the type attribute of the input element.
- * @method removeInputType - Removes the type attribute of the input element.
- *
- * @method getInputName - Returns the name attribute of the input element.
- * @method setInputName - Sets the name attribute of the input element.
- * @method removeInputName - Removes the name attribute of the input element.
- *
- * @method getInputPlaceholder - Returns the placeholder attribute of the input
- * element.
- * @method setInputPlaceholder - Sets the placeholder attribute of the input
- * element.
- * @method removeInputPlaceholder - Removes the placeholder attribute of the
- * input element.
- *
- * @method getHref - Returns the href attribute of the element.
- * @method setHref - Sets the href attribute of the element.
- * @method removeHref - Removes the href attribute of the element.
- *
- * @method getTarget - Returns the target attribute of the element.
- * @method setTarget - Sets the target attribute of the element.
- * @method removeTarget - Removes the target attribute of the element.
- *
- * @method getHTMLElement - Returns the HTML element.
- * @method makeHTMLElement - Creates and returns the HTML element based on the
- * current properties.
- * @method removeHTMLElement - Removes the HTML element from the DOM.
- *
- * @method removeInnerHTML - Clears the innerHTML of the element.
+ * properties and generating the HTML element, including methods for setting and
+ * getting the tag, parent, classList, id, textContent, data attributes, form
+ * action and method, input attributes, href, and target:
+ * - `getTag()`: returns the tag of the element
+ * - `setTag(tag) {string}`: sets the tag of the element after validation
+ * - `getParent()`: returns the parent of the element
+ * - `setParent(parent) {HTMLElement}`: sets the parent of the element after
+ * validation
+ * - `getClasses()`: returns the classes of the element
+ * - `addClass(className) {string}`: adds a class to the element after validation
+ * - `removeClass(className) {string}`: removes a class from the element
+ * - `getId()`: returns the ID of the element
+ * - `setId(id) {string}`: sets the ID of the element after validation
+ * - `removeId()`: removes the ID from the element
+ * - `getContent()`: returns the text content of the element
+ * - `setContent(textContent) {string}`: sets the text content of the element
+ * after validation
+ * - `removeContent()`: removes the text content of the element
+ * - `getData()`: returns the data attributes of the element
+ * - `setData(data) {Object}`: sets a data attribute of the element
+ * - `removeData(dataKey) {string}`: removes a data attribute of the element
+ * - `getFormAction()`: returns the form action of the element
+ * - `setFormAction(formAction) {string}`: sets the form action of the element
+ * after validation
+ * - `removeFormAction()`: removes the form action of the element
+ * - `getFormMethod()`: returns the form method of the element
+ * - `setFormMethod(formMethod) {string}`: sets the form method of the element
+ * after validation
+ * - `removeFormMethod()`: removes the form method of the element
+ * - `getLabelFor()`: returns the htmlFor attribute of the element
+ * - `setLabelFor(labelFor) {string}`: sets the htmlFor attribute of the element
+ * after validation
+ * - `removeLabelFor()`: removes the htmlFor attribute of the element
+ * - `getInputType()`: returns the type attribute of the input element
+ * - `setInputType(inputType) {string}`: sets the type attribute of the input
+ * element after validation
+ * - `getInputName()`: returns the name attribute of the input element
+ * - `setInputName(inputName) {string}`: sets the name attribute of the input
+ * element after validation
+ * - `removeInputName()`: removes the name attribute of the input element
+ * - `getInputPlaceholder()`: returns the placeholder attribute of the input
+ * element
+ * - `setInputPlaceholder(inputPlaceholder) {string}`: sets the placeholder
+ * attribute of the input element after validation
+ * - `removeInputPlaceholder()`: removes the placeholder attribute of the input
+ * element
+ * - `getHref()`: returns the href attribute of the element
+ * - `setHref(href) {string}`: sets the href attribute of the element after
+ * validation
+ * - `removeHref()`: removes the href attribute of the element
+ * - `getTarget()`: returns the target attribute of the element
+ * - `setTarget(target) {string}`: sets the target attribute of the element
+ * after validation
+ * - `removeTarget()`: removes the target attribute of the element
+ * - `getHTMLElement()`: returns the HTML element
+ * - `makeHTMLElement()`: creates the HTML element
+ * - `removeHTMLElement()`: removes the HTML element
+ * - `removeInnerHTML()`: removes the inner HTML of the element
  */
 const makeHTMLBuilder = (elementProperties = {}) => {
   /**
