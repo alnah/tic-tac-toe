@@ -144,6 +144,9 @@ const validatePlayer = validateObject([
   "resetScore",
 ]);
 
+/**
+ * Validates that a tie object has all the required tie methods.
+ */
 const validateTie = validateObject([
   "getTie",
   "getScore",
