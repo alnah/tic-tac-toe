@@ -6,7 +6,7 @@ import {
 
 /**
  * @module Board
- * @description This module provides functionality to create and manage a
+ * This module provides functionality to create and manage a
  * Tic-Tac-Toe board. It allows for the initialization of the board with
  * customizable or default properties including size, filler symbol, and grid.
  * It offers methods to interact with the board such as getting its size,
