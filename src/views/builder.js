@@ -37,9 +37,11 @@ const validateClassName = validateString(
   "Class name must be a non-empty string.",
 );
 
-const validateId = validateString("Unique ID name must be a non-empty string.");
+const validateId = validateString("ID name must be a non-empty string.");
 
-const validateTextContent = validateString("Text content must be a string.");
+const validateTextContent = validateString(
+  "Text content must be a non-empty string.",
+);
 
 const validateDataAttribute = validateString(
   "Data attribute name must be a non-empty string.",
