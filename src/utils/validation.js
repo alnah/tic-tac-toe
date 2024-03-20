@@ -93,12 +93,10 @@ const validateIsBoolean = value => {
  * @returns {Function} A function that takes an object to validate.
  */
 const validateObject = requiredMethods => object => {
-  // Check if the object is indeed an object and not null
   if (typeof object !== "object" || object === null) {
     throw new Error("Object must be a valid object");
   }
 
-  // Iterate through each required method to check its existence and type
   requiredMethods.forEach(method => {
     if (typeof object[method] !== "function") {
       throw new Error(`Object must have a method named ${method}`);
