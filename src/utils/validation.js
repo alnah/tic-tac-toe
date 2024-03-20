@@ -37,20 +37,19 @@ const validateIndex = (index, size) => {
   return index;
 };
 
-/**
- * Validates that the given id is a valid id for the player.
+/** Validates that the given number is a positive integer.
  *
- * @param {number} id The id to validate.
- * @returns {number} The validated id.
+ * @param {number} number The number to validate.
+ * @returns {number} The validated number.
  */
-const validateId = id => {
-  if (typeof id !== "number") {
+const validateIsPositiveInteger = number => {
+  if (typeof number !== "number") {
     throw new Error("Player id must be a number");
   }
-  if (id < 0) {
+  if (number < 0) {
     throw new Error("Player id must be a positive number");
   }
-  if (id % 1 === 0) return id;
+  if (number % 1 === 0) return number;
   throw new Error("Player id must be an integer");
 };
 
@@ -90,7 +89,7 @@ export {
   validateSize,
   validateSymbol,
   validateIndex,
-  validateId,
+  validateIsPositiveInteger,
   validateName,
   validateIsBoolean,
 };
