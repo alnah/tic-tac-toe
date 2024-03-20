@@ -41,16 +41,30 @@ export const validateIndex = (index, size) => {
  * @param {number} number The number to validate.
  * @returns {number} The validated number.
  */
-export const validateIsPositiveInteger = number => {
+const validateIsPositiveInteger = parameterName => number => {
   if (typeof number !== "number") {
-    throw new Error("Player id must be a number");
+    throw new Error(`${parameterName} must be a number`);
   }
   if (number < 0) {
-    throw new Error("Player id must be a positive number");
+    throw new Error(`${parameterName} must be a positive number`);
   }
   if (number % 1 === 0) return number;
-  throw new Error("Player id must be an integer");
+  throw new Error(`${parameterName} must be an integer`);
 };
+
+/** Validates that the given player id is a valid player id.
+ *
+ * @param {number} playerId The player id to validate.
+ * @returns {number} The validated player id.
+ */
+export const validatePlayerId = validateIsPositiveInteger("Player id");
+
+/** Validates that the given player score is a valid player score.
+ *
+ * @param {number} score The player score to validate.
+ * @returns {number} The validated player score.
+ */
+export const validatePlayerScore = validateIsPositiveInteger("Player score");
 
 /**
  * Validates that the given name is a valid name for the player.
