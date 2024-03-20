@@ -3,7 +3,7 @@ import {
   validateName,
   validateSymbol,
   validateIsBoolean,
-  validatePlayerScore,
+  validateScore,
 } from "../utils/validation";
 
 /**
@@ -39,7 +39,7 @@ const makePlayer = (
   if (name) validateName(name);
   if (symbol) validateSymbol(symbol);
   if (isCurrent) validateIsBoolean(isCurrent);
-  validatePlayerScore(score);
+  validateScore(score);
   validateIsBoolean(isWinner);
 
   return Object.freeze({
