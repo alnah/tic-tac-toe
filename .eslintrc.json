@@ -3,14 +3,15 @@
   "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": ["error"],
-    "no-unused-vars": "warn",
+    "no-unused-vars": "error",
+    "consistent-return": "error",
+    "no-undef": "error",
+    "import/no-unresolved": "error",
     "no-console": "off",
     "func-names": "off",
-    "consistent-return": "error",
     "class-methods-use-this": "off",
     "no-underscore-dangle": "off",
-    "no-undef": "error",
-    "import/no-unresolved": "error"
+    "object-shorthand": "off"
   },
   "env": {
     "browser": true,
