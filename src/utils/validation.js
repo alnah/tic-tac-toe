@@ -158,6 +158,11 @@ const validateTie = validateObject([
   "resetTie",
 ]);
 
+/** Validates that the given win cells are valid win cells for the board.
+ *
+ * @param {Array<number>} winCells The win cells to validate.
+ * @param {number} size The size of the board.
+ */
 const validateWinCells = (winCells, size) => {
   if (!Array.isArray(winCells)) {
     throw new Error("Win cells must be an array");
