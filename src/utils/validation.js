@@ -85,6 +85,85 @@ const validateIsBoolean = value => {
   return value;
 };
 
+/**
+ * Validates that the given object has all the required methods.
+ *
+ * @param {Array<string>} requiredMethods An array of strings representing the
+ * names of the required methods.
+ * @returns {Function} A function that takes an object to validate.
+ */
+const validateObject = requiredMethods => object => {
+  // Check if the object is indeed an object and not null
+  if (typeof object !== "object" || object === null) {
+    throw new Error("Object must be a valid object");
+  }
+
+  // Iterate through each required method to check its existence and type
+  requiredMethods.forEach(method => {
+    if (typeof object[method] !== "function") {
+      throw new Error(`Object must have a method named ${method}`);
+    }
+  });
+};
+
+/**
+ * Validates that a board object has all the required board methods.
+ */
+const validateBoard = validateObject([
+  "getSize",
+  "getFiller",
+  "getBoard",
+  "resetBoard",
+  "getGrid",
+  "getCell",
+  "setCell",
+  "hasWin",
+  "hasTie",
+  "getWinCells",
+]);
+
+/**
+ * Validates that a player object has all the required player methods.
+ */
+const validatePlayer = validateObject([
+  "setId",
+  "setName",
+  "setSymbol",
+  "setIsCurrent",
+  "setIsNext",
+  "setIsWinner",
+  "getPlayer",
+  "getId",
+  "getName",
+  "getSymbol",
+  "getIsCurrent",
+  "getIsWinner",
+  "getScore",
+  "incrementScore",
+  "resetIsWinner",
+  "resetScore",
+]);
+
+const validateTie = validateObject([
+  "getTie",
+  "getScore",
+  "getIsTie",
+  "setIsTie",
+  "incrementScore",
+  "resetScore",
+  "resetIsTie",
+  "resetTie",
+]);
+
+const validateWinCells = (winCells, size) => {
+  if (!Array.isArray(winCells)) {
+    throw new Error("Win cells must be an array");
+  }
+  if (winCells.length !== size) {
+    throw new Error(`Win cells must have a length of ${size}`);
+  }
+};
+
 export {
   validateSize,
   validateSymbol,
@@ -92,4 +171,8 @@ export {
   validateIsPositiveInteger,
   validateName,
   validateIsBoolean,
+  validateBoard,
+  validatePlayer,
+  validateTie,
+  validateWinCells,
 };
