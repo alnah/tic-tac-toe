@@ -13,7 +13,7 @@ const NO_TAG_ERR_MSG =
 const NO_PARENT_ERR_MSG =
   "Use 'setParent' method before attempting to make the HTML element.";
 
-export const validateParent = parent => {
+const validateParent = parent => {
   if (!(parent instanceof HTMLElement)) {
     throw new Error("Parent must be an instance of HTMLElement.");
   }
@@ -31,50 +31,48 @@ const validateWith = (errorMessage, validationFn) => value => {
   }
 };
 
-export const validateTag = validateString(
-  "Tag name must be a non-empty string.",
-);
+const validateTag = validateString("Tag name must be a non-empty string.");
 
-export const validateClassName = validateString(
+const validateClassName = validateString(
   "Class name must be a non-empty string.",
 );
 
-export const validateId = validateString(
-  "Unique ID name must be a non-empty string.",
-);
+const validateId = validateString("Unique ID name must be a non-empty string.");
 
-export const validateTextContent = validateString(
-  "Text content must be a string.",
-);
+const validateTextContent = validateString("Text content must be a string.");
 
-export const validateDataAttribute = validateString(
+const validateDataAttribute = validateString(
   "Data attribute name must be a non-empty string.",
 );
 
-export const validateFormAction = validateString(
+const validateFormAction = validateString(
   "Form action must be a non-empty string.",
 );
 
-export const validateFormMethod = validateWith(
+const validateFormMethod = validateWith(
   "Form method must be one of the following: #, GET, POST, PUT, DELETE.",
   method =>
     ["#", "GET", "POST", "PUT", "DELETE"].includes(method.toUpperCase()),
 );
 
-export const validateLabelFor = validateString(
+const validateLabelFor = validateString(
   "Label for must be a non-empty string.",
 );
 
-export const validateInputType = validateString(
+const validateInputType = validateString(
   "Input type must be a non-empty string.",
 );
 
-export const validateInputName = validateString(
+const validateInputName = validateString(
   "Input name must be a non-empty string.",
 );
 
-export const validateInputPlaceholder = validateString(
+const validateInputPlaceholder = validateString(
   "Input placeholder must be a non-empty string.",
+);
+
+const validateButtonType = validateString(
+  "Button type must be a non-empty string.",
 );
 
 export const validateHref = validateString(
@@ -85,7 +83,7 @@ export const validateTarget = validateString(
   "Target must be a non-empty string.",
 );
 
-const makeHTMLElement = (elementProperties = {}) => {
+const buildHTMLElement = (elementProperties = {}) => {
   const updateProps = updates => ({
     ...elementProperties,
     ...updates,
@@ -144,12 +142,12 @@ const makeHTMLElement = (elementProperties = {}) => {
   };
 
   const elementMethods = {
-    getElement: () => {
+    getInstance: () => {
       if (!elementProperties.element) throw new Error(NO_NODE_ERR_MSG);
       return elementProperties.element;
     },
 
-    makeElement: () => {
+    makeInstance: () => {
       if (!elementProperties.tag) throw new Error(NO_TAG_ERR_MSG);
       if (!elementProperties.parent) throw new Error(NO_PARENT_ERR_MSG);
 
@@ -167,29 +165,29 @@ const makeHTMLElement = (elementProperties = {}) => {
       // eslint-disable-next-line no-param-reassign
       elementProperties.element = element;
 
-      return makeHTMLElement(elementProperties);
+      return buildHTMLElement(elementProperties);
     },
 
-    removeElement: () => {
+    removeInstance: () => {
       if (!elementProperties.element) throw new Error(NO_NODE_ERR_MSG);
       elementProperties.element.remove();
       // eslint-disable-next-line no-param-reassign
       elementProperties.element = null;
-      return makeHTMLElement(elementProperties);
+      return buildHTMLElement(elementProperties);
     },
 
     getTag: () => elementProperties.tag,
 
     setTag: tag => {
       validateTag(tag);
-      return makeHTMLElement(updateProps({ tag }));
+      return buildHTMLElement(updateProps({ tag }));
     },
 
     getParent: () => elementProperties.parent,
 
     setParent: parent => {
       validateParent(parent);
-      return makeHTMLElement(updateProps({ parent }));
+      return buildHTMLElement(updateProps({ parent }));
     },
 
     getClasses: () => elementProperties.className,
@@ -200,7 +198,7 @@ const makeHTMLElement = (elementProperties = {}) => {
         elementProperties.classList ? elementProperties.classList : [];
       const updatedClasses = existingClasses.concat(className).filter(Boolean);
 
-      return makeHTMLElement(updateProps({ classList: updatedClasses }));
+      return buildHTMLElement(updateProps({ classList: updatedClasses }));
     },
 
     removeClass: className => {
@@ -208,123 +206,130 @@ const makeHTMLElement = (elementProperties = {}) => {
         elementProperties.classList ? elementProperties.classList : [];
       const updatedClasses = existingClasses.filter(c => c !== className && c);
 
-      return makeHTMLElement(updateProps({ classList: updatedClasses }));
+      return buildHTMLElement(updateProps({ classList: updatedClasses }));
     },
 
     getId: () => elementProperties.id,
 
     setId: id => {
       validateId(id);
-      return makeHTMLElement(updateProps({ id }));
+      return buildHTMLElement(updateProps({ id }));
     },
 
-    removeId: () => makeHTMLElement(updateProps({ id: null })),
+    removeId: () => buildHTMLElement(updateProps({ id: null })),
 
     getContent: () => elementProperties.textContent,
 
     setContent: textContent => {
       validateTextContent(textContent);
-      return makeHTMLElement(updateProps({ textContent }));
+      return buildHTMLElement(updateProps({ textContent }));
     },
 
-    removeContent: () => makeHTMLElement(updateProps({ textContent: "" })),
+    removeContent: () => buildHTMLElement(updateProps({ textContent: "" })),
 
     getData: () => elementProperties.data,
 
     setData: (attribute, value) => {
       validateDataAttribute(attribute);
-      return makeHTMLElement(updateProps({ data: { [attribute]: value } }));
+      return buildHTMLElement(updateProps({ data: { [attribute]: value } }));
     },
 
     removeData: attribute => {
       const newData = { ...elementProperties.data };
       delete newData[attribute];
 
-      return makeHTMLElement(updateProps({ data: newData }));
+      return buildHTMLElement(updateProps({ data: newData }));
     },
 
     getFormAction: () => elementProperties.action,
 
     setFormAction: action => {
       validateFormAction(action);
-      return makeHTMLElement(updateProps({ action }));
+      return buildHTMLElement(updateProps({ action }));
     },
 
-    removeFormAction: () => makeHTMLElement(updateProps({ action: null })),
+    removeFormAction: () => buildHTMLElement(updateProps({ action: null })),
 
     getFormMethod: () => elementProperties.method,
 
     setFormMethod: method => {
       validateFormMethod(method);
-      return makeHTMLElement(updateProps({ method }));
+      return buildHTMLElement(updateProps({ method }));
     },
 
-    removeFormMethod: () => makeHTMLElement(updateProps({ method: null })),
+    removeFormMethod: () => buildHTMLElement(updateProps({ method: null })),
 
     getLabelFor: () => elementProperties.htmlFor,
 
     setLabelFor: htmlFor => {
       validateLabelFor(htmlFor);
-      return makeHTMLElement(updateProps({ htmlFor }));
+      return buildHTMLElement(updateProps({ htmlFor }));
     },
 
-    removeLabelFor: () => makeHTMLElement(updateProps({ htmlFor: null })),
+    removeLabelFor: () => buildHTMLElement(updateProps({ htmlFor: null })),
 
     getInputType: () => elementProperties.type,
 
     setInputType: type => {
       validateInputType(type);
-      return makeHTMLElement(updateProps({ type }));
+      return buildHTMLElement(updateProps({ type }));
     },
 
-    removeInputType: () => makeHTMLElement(updateProps({ type: null })),
+    removeInputType: () => buildHTMLElement(updateProps({ type: null })),
 
     getInputName: () => elementProperties.name,
 
     setInputName: name => {
       validateInputName(name);
-      return makeHTMLElement(updateProps({ name }));
+      return buildHTMLElement(updateProps({ name }));
     },
-
-    removeInputName: () => makeHTMLElement(updateProps({ name: null })),
 
     getInputPlaceholder: () => elementProperties.placeholder,
 
     setInputPlaceholder: placeholder => {
       validateInputPlaceholder(placeholder);
-      return makeHTMLElement(updateProps({ placeholder }));
+      return buildHTMLElement(updateProps({ placeholder }));
     },
 
     removeInputPlaceholder: () =>
-      makeHTMLElement(updateProps({ placeholder: null })),
+      buildHTMLElement(updateProps({ placeholder: null })),
+
+    getButtonType: () => elementProperties.type,
+
+    setButtonType: type => {
+      validateButtonType(type);
+      return buildHTMLElement(updateProps({ type }));
+    },
+
+    removeButtonType: () => buildHTMLElement(updateProps({ type: null })),
 
     getHref: () => elementProperties.href,
 
     setHref: href => {
       validateHref(href);
-      return makeHTMLElement(updateProps({ href }));
+      return buildHTMLElement(updateProps({ href }));
     },
 
-    removeHref: () => makeHTMLElement(updateProps({ href: null })),
+    removeHref: () => buildHTMLElement(updateProps({ href: null })),
 
     getTarget: () => elementProperties.target,
 
     setTarget: target => {
       validateTarget(target);
-      return makeHTMLElement(updateProps({ target }));
+      return buildHTMLElement(updateProps({ target }));
     },
 
-    removeTarget: () => makeHTMLElement(updateProps({ target: null })),
+    removeTarget: () => buildHTMLElement(updateProps({ target: null })),
 
     removeInnerHTML: () => {
       if (!elementProperties.element) throw new Error(NO_NODE_ERR_MSG);
       // eslint-disable-next-line no-param-reassign
       elementProperties.element.innerHTML = "";
 
-      return makeHTMLElement(elementProperties);
+      return buildHTMLElement(elementProperties);
     },
   };
   return Object.freeze(elementMethods);
 };
 
-export default makeHTMLElement;
+export default buildHTMLElement;
