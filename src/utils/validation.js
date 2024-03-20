@@ -1,6 +1,6 @@
 /**
  * Validates that the given size is a valid size for the board.
- * 
+ *
  * @param {number} size The size to validate.
  * @returns {number} The validated size.
  */
@@ -13,7 +13,7 @@ const validateSize = size => {
 
 /**
  * Validates that the given symbol is a valid symbol for the board.
- * 
+ *
  * @param {string} symbol The symbol to validate.
  * @returns {string} The validated symbol.
  */
@@ -26,7 +26,7 @@ const validateSymbol = symbol => {
 
 /**
  * Validates that the given index is a valid index for the board.
- * 
+ *
  * @param {number} index The index to validate.
  * @returns {number} The validated index.
  */
@@ -37,4 +37,60 @@ const validateIndex = (index, size) => {
   return index;
 };
 
-export { validateSize, validateSymbol, validateIndex };
+/**
+ * Validates that the given id is a valid id for the player.
+ *
+ * @param {number} id The id to validate.
+ * @returns {number} The validated id.
+ */
+const validateId = id => {
+  if (typeof id !== "number") {
+    throw new Error("Player id must be a number");
+  }
+  if (id < 0) {
+    throw new Error("Player id must be a positive number");
+  }
+  if (id % 1 === 0) return id;
+  throw new Error("Player id must be an integer");
+};
+
+/**
+ * Validates that the given name is a valid name for the player.
+ *
+ * @param {string} name The name to validate.
+ * @returns {string} The validated name.
+ */
+const validateName = name => {
+  if (typeof name !== "string") {
+    throw new Error("Player name must be a string");
+  }
+  if (name.length < 1) {
+    throw new Error("Player name must be at least 1 character long");
+  }
+  if (name.length > 12) {
+    throw new Error("Player name must be at most 12 characters long");
+  }
+  return name;
+};
+
+/**
+ * Validates that the given value is a boolean.
+ *
+ * @param {boolean} value The value to validate.
+ * @returns {boolean} The validated value.
+ */
+const validateIsBoolean = value => {
+  if (typeof value !== "boolean") {
+    throw new Error("Value must be a boolean");
+  }
+  return value;
+};
+
+export {
+  validateSize,
+  validateSymbol,
+  validateIndex,
+  validateId,
+  validateName,
+  validateIsBoolean,
+};
