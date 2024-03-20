@@ -5,6 +5,17 @@ import {
 } from "../utils/validation";
 
 /**
+ * @module Board
+ * @description This module provides functionality to create and manage a
+ * Tic-Tac-Toe board. It allows for the initialization of the board with
+ * customizable or default properties including size, filler symbol, and grid.
+ * It offers methods to interact with the board such as getting its size,
+ * resetting the board, and retrieving the grid. Additionally, it provides
+ * functionality to place symbols on the board, check for wins or ties, and
+ * find winning cells.
+ */
+
+/**
  * The default size of the Tic-Tac-Toe board.
  * @type {number}
  */
@@ -36,11 +47,27 @@ const makeGrid = (size, filler) =>
   Object.freeze(Array.from({ length: size }, () => makeRow(size, filler)));
 
 /**
- * Factory function to create a board object with its methods.
- * @param {Object} board - An object containing the size, filler, and grid of
- * the board. Defaults to a standard board.
- * @returns {Object} An object representing the board with methods to manipulate
- * and query the board state.
+ * Factory function to create a board object. This function initializes a board
+ * with customizable or default properties including size, filler symbol, and
+ * grid. It returns an object that provides methods to interact with the board,
+ * such as getting its size, resetting the board, and retrieving the grid.
+ *
+ * @param {Object} [board={ size: SIZE, filler: FILLER, grid: makeGrid(SIZE, FILLER) }]
+ * - An optional parameter for fluent interface.
+ * Defaults is set to a 3x3 grid filled with "_". Don't change it!
+ * @param {number} [board.size=3] - The number of rows and columns in the board.
+ * @param {string} [board.filler='_']
+ * - The symbol used to fill empty cells in the board.
+ * @param {Array<Array<string>>} [board.grid=makeGrid(SIZE, FILLER)]
+ * - A 2D array representing the initial state of the board's cells.
+ * @returns {Object} An object representing the board, including methods for
+ * interacting with the board:
+ *  - getSize(): {number} Returns the size of the board.
+ *  - getFiller(): {string} Returns the filler symbol of the board.
+ *  - getBoard(): {Object} Returns the board object.
+ *  - resetBoard(): {Object} Resets the board to its initial state.
+ *  - getGrid(): {Array<Array<string>>} Returns the 2D array representing the
+ * board's grid.
  */
 const makeBoard = (
   board = { size: SIZE, filler: FILLER, grid: makeGrid(SIZE, FILLER) },
