@@ -37,8 +37,8 @@ const makePlayer = (
   if (id) validateIsPositiveInteger(id);
   if (name) validateName(name);
   if (symbol) validateSymbol(symbol);
-  if (score) validateIsPositiveInteger(score);
   if (isCurrent) validateIsBoolean(isCurrent);
+  validateIsPositiveInteger(score);
   validateIsBoolean(isWinner);
 
   return Object.freeze({
