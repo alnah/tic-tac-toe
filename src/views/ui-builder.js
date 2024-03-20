@@ -1,7 +1,7 @@
 /** When using the builder, be sure to set an HTMLElement as a parent. If you
-have created an element using build, it does not return the HTMLElement but
-the builder itself get a fluent interface. So be sure to use getHTMLElement 
-method to get the HTMLElement when building.
+have created an element using buildHTMLElement, it does not return the 
+HTMLElement but the builder itself to get a fluent interface. 
+So be sure to use getHTMLElement method to get the HTMLElement when building.
 */
 
 const NO_NODE_ERR_MSG =
