@@ -155,14 +155,15 @@ export const validateType = type => {
 };
 
 export const validatePayload = payload => {
-  if (typeof payload !== "function" || typeof payload !== "object") {
-    throw new Error("Payload must be a function or object");
+  if (!(typeof payload === "function" || typeof payload === "object")) {
+    throw new Error("Payload must be a function or an object");
   }
   return payload;
 };
 
-export const validateNotify = validateObject([
-  "addObserver",
-  "removeObserver",
-  "notifyObservers",
-]);
+export const validateNotify = notify => {
+  if (typeof notify !== "function") {
+    throw new Error("Notify must be a function");
+  }
+  return notify;
+};
