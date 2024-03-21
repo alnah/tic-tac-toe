@@ -18,8 +18,8 @@ const INIT_CAN_PLAY = true;
 const INIT_WIN_CELLS = Object.freeze([null, null, null]);
 
 const makeGame = (
-  namePlayer1 = "Player 1",
-  namePlayer2 = "Player 2",
+  namePlayer1,
+  namePlayer2,
   game = {
     board: makeBoard(),
     player1: makePlayer()
@@ -73,21 +73,23 @@ const makeGame = (
       const isWin = updatedBoard.hasWin(row, col, symbol);
       const isTie = updatedBoard.hasTie(row, col, symbol);
 
-      const updatedPlayer =
-        isWin ? currentPlayer.setIsWinner().incrementScore() : currentPlayer;
+      const updatedPlayer = isWin
+        ? currentPlayer.setIsWinner().incrementScore()
+        : currentPlayer;
 
-      const winningCells =
-        isWin ? updatedBoard.getWinCells(row, col, symbol) : INIT_WIN_CELLS;
+      const winningCells = isWin
+        ? updatedBoard.getWinCells(row, col, symbol)
+        : INIT_WIN_CELLS;
 
       const updatedPlayer1 =
-        player1.getId() === updatedPlayer.getId() ?
-          updatedPlayer.setIsNext()
-        : player1.setIsCurrent();
+        player1.getId() === updatedPlayer.getId()
+          ? updatedPlayer.setIsNext()
+          : player1.setIsCurrent();
 
       const updatedPlayer2 =
-        updatedPlayer.getId() === player2.getId() ?
-          updatedPlayer.setIsNext()
-        : player2.setIsCurrent();
+        updatedPlayer.getId() === player2.getId()
+          ? updatedPlayer.setIsNext()
+          : player2.setIsCurrent();
 
       const updatedTie = isTie ? tie.setIsTie().incrementScore() : tie;
 
@@ -108,11 +110,13 @@ const makeGame = (
     startNewRound: () => {
       const updatedBoard = board.resetBoard();
 
-      const updatedPlayer1 =
-        player1.getIsWinner() ? player1.resetIsWinner() : player1;
+      const updatedPlayer1 = player1.getIsWinner()
+        ? player1.resetIsWinner()
+        : player1;
 
-      const updatedPlayer2 =
-        player2.getIsWinner() ? player2.resetIsWinner() : player2;
+      const updatedPlayer2 = player2.getIsWinner()
+        ? player2.resetIsWinner()
+        : player2;
 
       const updatedTie = tie.getIsTie() ? tie.resetIsTie() : tie;
 
