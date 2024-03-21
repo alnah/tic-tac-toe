@@ -57,7 +57,7 @@ const makeBoard = (
       return false;
     },
 
-    hasTie: (row, col, symbol) => {
+    hasTie: function (row, col, symbol) {
       if (this.hasWin(row, col, symbol)) return false;
       return grid.every(r => !r.some(cell => cell === filler));
     },
@@ -83,8 +83,8 @@ const makeBoard = (
       });
 
       const updatedWinCells = winCells.map(cell => ({
-        row: Number(cell.row),
-        col: Number(cell.col),
+        row: cell.row,
+        col: cell.col,
       }));
 
       return Object.freeze(updatedWinCells);
