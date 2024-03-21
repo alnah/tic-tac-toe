@@ -14,7 +14,7 @@ export const getStartGamePayload = event => {
 export const getCellPayload = event => {
   validateIsEvent(event);
   return Object.freeze({
-    value: event.target.value,
+    value: event.target,
     row: Number(event.target.dataset.row),
     col: Number(event.target.dataset.col),
   });
