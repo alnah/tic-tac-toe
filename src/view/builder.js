@@ -196,16 +196,18 @@ const buildHTMLElement = (elementProperties = {}) => {
 
     addClass: className => {
       validateClassName(className);
-      const existingClasses =
-        elementProperties.classList ? elementProperties.classList : [];
+      const existingClasses = elementProperties.classList
+        ? elementProperties.classList
+        : [];
       const updatedClasses = existingClasses.concat(className).filter(Boolean);
 
       return buildHTMLElement(updateProps({ classList: updatedClasses }));
     },
 
     removeClass: className => {
-      const existingClasses =
-        elementProperties.classList ? elementProperties.classList : [];
+      const existingClasses = elementProperties.classList
+        ? elementProperties.classList
+        : [];
       const updatedClasses = existingClasses.filter(c => c !== className && c);
 
       return buildHTMLElement(updateProps({ classList: updatedClasses }));
@@ -331,6 +333,7 @@ const buildHTMLElement = (elementProperties = {}) => {
       return buildHTMLElement(elementProperties);
     },
   };
+
   return Object.freeze(elementMethods);
 };
 
