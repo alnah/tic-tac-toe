@@ -1,4 +1,4 @@
-import { validateIsBoolean, validateScore } from "../utils/validation";
+import { validateIsBoolean, validateScore } from "../utils/validators";
 
 /**
  * @module Tie

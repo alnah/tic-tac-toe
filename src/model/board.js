@@ -1,4 +1,4 @@
-import validateIndex from "../utils/validation";
+import validateIndex from "../utils/validators";
 
 const SIZE = 3;
 const FILLER = "_";

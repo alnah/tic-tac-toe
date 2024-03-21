@@ -1,14 +1,18 @@
 import makeBoard from "./board";
+
 import makePlayer from "./player";
+
 import makeTie from "./tie";
+
 import makeObserver from "../utils/observer";
+
 import {
   validateIsBoolean,
   validateBoard,
   validatePlayer,
   validateTie,
   validateWinCells,
-} from "../utils/validation";
+} from "../utils/validators";
 
 const INIT_CAN_PLAY = true;
 const INIT_WIN_CELLS = Object.freeze([null, null, null]);

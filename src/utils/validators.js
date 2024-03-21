@@ -63,6 +63,7 @@ const validateObject = requiredMethods => object => {
       throw new Error(`Object must have a method named ${method}`);
     }
   });
+  return object;
 };
 
 export const validateBoard = validateObject([
@@ -115,4 +116,53 @@ export const validateWinCells = (winCells, size) => {
   if (winCells.length !== size) {
     throw new Error(`Win cells must have a length of ${size}`);
   }
+  return winCells;
 };
+
+export const validateIsHTMLElement = element => {
+  if (!(element instanceof HTMLElement)) {
+    throw new Error("Element must be an HTMLElement");
+  }
+  return element;
+};
+
+export const validateIsEvent = event => {
+  if (!(event instanceof Event)) {
+    throw new Error("Event must be an Event");
+  }
+  return event;
+};
+
+export const validateHandler = handler => {
+  if (typeof handler !== "function") {
+    throw new Error("Handler must be a function");
+  }
+  return handler;
+};
+
+export const validateEventType = eventType => {
+  if (typeof eventType !== "string") {
+    throw new Error("Event type must be a string");
+  }
+  return eventType;
+};
+
+export const validateType = type => {
+  if (typeof type !== "string" || type.trim() === "") {
+    throw new Error("Type must be a non-empty string.");
+  }
+  return type;
+};
+
+export const validatePayload = payload => {
+  if (typeof payload !== "function" || typeof payload !== "object") {
+    throw new Error("Payload must be a function or object");
+  }
+  return payload;
+};
+
+export const validateNotify = validateObject([
+  "addObserver",
+  "removeObserver",
+  "notifyObservers",
+]);

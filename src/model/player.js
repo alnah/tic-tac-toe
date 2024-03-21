@@ -4,7 +4,7 @@ import {
   validateSymbol,
   validateIsBoolean,
   validateScore,
-} from "../utils/validation";
+} from "../utils/validators";
 
 const INIT_SCORE = 0;
 const INIT_IS_WINNER = false;
