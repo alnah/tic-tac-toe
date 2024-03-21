@@ -20,23 +20,21 @@ const makeHandler = ({ payload, type, notify, mustPreventDefault = false }) => {
 
   return event => {
     if (mustPreventDefault) event.preventDefault();
-    if (!payload || payload === undefined || payload === null) {
-      notify(baseData);
-    } else {
+    if (payload) {
       notify({ ...baseData, ...Object.freeze(payload(event)) });
+    } else {
+      notify(baseData);
     }
   };
 };
 
-export const startGameHandler = notify => {
-  console.log("startGameHandler triggered");
-  return makeHandler({
+export const startGameHandler = notify =>
+  makeHandler({
     payload: getStartGamePayload,
     type: "startGameClick",
     notify,
     mustPreventDefault: true,
   });
-};
 
 export const cellClickHandler = notify =>
   makeHandler({
