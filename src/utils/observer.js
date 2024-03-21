@@ -9,13 +9,8 @@ const makeObserver = () => {
     },
 
     notifyObservers: data => {
-      observers.forEach(observer => {
-        if (typeof observer === "function") {
-          observer(data);
-        } else if (typeof observer.update === "function") {
-          observer.update(data);
-        }
-      });
+      console.log("notifyObservers:", data);
+      observers.forEach(observer => observer.update(data));
     },
   });
 };
