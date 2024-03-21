@@ -1,11 +1,13 @@
 import { validateIsEvent } from "../utils/validators";
 
+const getDefaultPlayerName = number => `Player ${number}`;
+
 export const getStartGamePayload = event => {
   validateIsEvent(event);
   const form = new FormData(event.target);
   return Object.freeze({
-    namePlayer1: form.get("player1-input") || "Player 1",
-    namePlayer2: form.get("player2-input") || "Player 2",
+    player1Name: form.get("player1-input") || getDefaultPlayerName(1),
+    player2Name: form.get("player2-input") || getDefaultPlayerName(2),
   });
 };
 
