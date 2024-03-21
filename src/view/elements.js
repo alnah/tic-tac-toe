@@ -104,7 +104,7 @@ export const containerPlayer1 = buildHTMLElement()
   .setParent(header.getInstance())
   .makeInstance();
 
-export const namePlayer1 = buildHTMLElement()
+export const player1Name = buildHTMLElement()
   .setTag("h2")
   .addClass("name")
   .setId("player1-name")
@@ -124,7 +124,7 @@ export const containerPlayer2 = buildHTMLElement()
   .setParent(header.getInstance())
   .makeInstance();
 
-export const namePlayer2 = buildHTMLElement()
+export const player2Name = buildHTMLElement()
   .setTag("h2")
   .addClass("name")
   .setId("player2-name")
