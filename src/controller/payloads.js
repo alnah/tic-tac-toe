@@ -15,7 +15,7 @@ export const getCellPayload = event => {
   validateIsEvent(event);
   return Object.freeze({
     value: event.target.value,
-    row: event.target.dataset.row,
-    col: event.target.dataset.col,
+    row: Number(event.target.dataset.row),
+    col: Number(event.target.dataset.col),
   });
 };
