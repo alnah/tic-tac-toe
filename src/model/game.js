@@ -15,7 +15,7 @@ import {
 } from "../utils/validators";
 
 const INIT_CAN_PLAY = true;
-const INIT_WIN_CELLS = Object.freeze([null, null, null]);
+const INIT_WIN_CELLS = Object.freeze(["", "", ""]);
 
 const makeGame = (
   player1Name,
