@@ -2,7 +2,7 @@
   "extends": ["airbnb-base", "prettier"],
   "plugins": ["prettier"],
   "rules": {
-    "prettier/prettier": ["error"],
+    "prettier/prettier": ["error", { "usePrettierrc": true }],
     "no-unused-vars": "error",
     "consistent-return": "error",
     "no-undef": "error",
