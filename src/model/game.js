@@ -18,18 +18,18 @@ const INIT_CAN_PLAY = true;
 const INIT_WIN_CELLS = Object.freeze([null, null, null]);
 
 const makeGame = (
-  namePlayer1,
-  namePlayer2,
+  player1Name,
+  player2Name,
   game = {
     board: makeBoard(),
     player1: makePlayer()
       .setId(1)
-      .setName(namePlayer1)
+      .setName(player1Name)
       .setSymbol("x")
       .setIsCurrent(),
     player2: makePlayer()
       .setId(2)
-      .setName(namePlayer2)
+      .setName(player2Name)
       .setSymbol("o")
       .setIsNext(),
     tie: makeTie(),
@@ -93,7 +93,7 @@ const makeGame = (
 
       const updatedTie = isTie ? tie.setIsTie().incrementScore() : tie;
 
-      const updatedGame = makeGame(namePlayer1, namePlayer2, {
+      const updatedGame = makeGame(player1Name, player2Name, {
         ...game,
         board: updatedBoard,
         player1: updatedPlayer1,
@@ -120,7 +120,7 @@ const makeGame = (
 
       const updatedTie = tie.getIsTie() ? tie.resetIsTie() : tie;
 
-      const updatedGame = makeGame(namePlayer1, namePlayer2, {
+      const updatedGame = makeGame(player1Name, player2Name, {
         ...game,
         board: updatedBoard,
         player1: updatedPlayer1,
